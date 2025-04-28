@@ -1,14 +1,56 @@
-# dapp-skeleton
+# Voting DApp
 
-Starter repository for the 4‑hour Voting DApp sprint.
+Une application décentralisée (DApp) de vote construite avec React, Web3.js et Ethereum.
 
-## Structure
+## 📝 Informations du Contrat
 
-```
-contracts/          # Solidity code
-test/               # Hardhat tests
-scripts/            # deployment scripts
-frontend-lite/      # minimal HTML + Web3.js interface
-```
+- **Adresse du Contrat**: `0x30113D3Db564e48A35cd2B6e050AeFB2f22Aa96f`
+- **Réseau**: Sepolia Testnet
 
-Follow the workshop instructions to complete TODOs, deploy on Sepolia and record your demo.
+## 🌐 Application Déployée
+
+[Lien vers l'application](https://your-dapp-url.netlify.app) 
+
+## 🚀 Installation Locale
+
+1. **Cloner le projet**
+   ```bash
+   git clone <votre-repo>
+   cd frontend
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
+
+3. **Lancer l'application en développement**
+   ```bash
+   npm run dev
+   ```
+   L'application sera accessible sur `http://localhost:5173`
+
+## 🔧 Prérequis
+
+- Node.js (v18 ou supérieur)
+- MetaMask installé dans votre navigateur
+- Des ETH de test sur le réseau Sepolia
+
+## 📱 Fonctionnalités
+
+- Connexion avec MetaMask
+- Création de sondages
+- Vote sur les sondages existants
+- Consultation des résultats en temps réel
+
+## 🛠 Technologies Utilisées
+
+- React + Vite
+- TypeScript
+- Web3.js
+- TailwindCSS
+- MetaMask
+
+## 📄 License
+
+MIT
