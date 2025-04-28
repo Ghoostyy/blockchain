@@ -51,6 +51,3 @@ Une application décentralisée (DApp) de vote construite avec React, Web3.js et
 - TailwindCSS
 - MetaMask
 
-## 📄 License
-
-MIT
