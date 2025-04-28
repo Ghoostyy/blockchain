@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Voting DApp (lite)</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+</head>
+
+<body>
+  <h1>Voting DApp</h1>
+  <button id="connect">Connect wallet</button>
+  <br><br>
+  <button id="create">Create sample poll</button>
+  <br><br>
+  <button id="vote">Vote option 0</button>
+  <br><br>
+  <button id="results">Get results</button>
+  <p id="out"></p>
+
+  <script>
+    const ABI = [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          }
+        ],
+        "name": "PollCreated",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "voter",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "option",
+            "type": "uint256"
+          }
+        ],
+        "name": "Voted",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+          },
+          {
+            "internalType": "string[]",
+            "name": "_opts",
+            "type": "string[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_duration",
+            "type": "uint256"
+          }
+        ],
+        "name": "createPoll",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "polls",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "deadline",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          }
+        ],
+        "name": "results",
+        "outputs": [
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "opt",
+            "type": "uint256"
+          }
+        ],
+        "name": "vote",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "voted",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+
+    ];
+    const ADDR = "0x30113D3Db564e48A35cd2B6e050AeFB2f22Aa96f";
+    let web3, account, ctr;
+
+    async function out(t) { document.getElementById('out').innerText = t; }
+
+    document.getElementById('connect').onclick = async () => {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      web3 = new Web3(window.ethereum);
+      [account] = await web3.eth.getAccounts();
+      ctr = new web3.eth.Contract(ABI, ADDR);
+      out("Connected: " + account);
+    };
+
+    document.getElementById('create').onclick = async () => {
+      await ctr.methods.createPoll("Tea?", ["Yes", "No"], 3600).send({ from: account });
+      out("Poll created!");
+    };
+
+    document.getElementById('vote').onclick = async () => {
+      await ctr.methods.vote(0, 0).send({ from: account });
+      out("Voted!");
+    };
+
+
+    document.getElementById('results').onclick = async () => {
+      const results = await ctr.methods.results(0).call();
+      out("Votes: Yes = " + results[0] + " | No = " + results[1]);
+    };
+  </script>
+</body>
+
+</html>
