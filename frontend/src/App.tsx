@@ -4,7 +4,7 @@ import './App.css'
 
 function App() {
   const { account, contract, connectWallet, isConnected } = useWeb3()
-  const [pollName, setPollName] = useState('')
+  const [pollName, setPollName] = useState('Tea?')
   const [pollResults, setPollResults] = useState<number[]>([])
   const [loading, setLoading] = useState(false)
   const [pollId, setPollId] = useState<number>(0)
@@ -14,9 +14,8 @@ function App() {
     try {
       setLoading(true)
       const receipt = await contract.methods
-        .createPoll("Tea?", ["Yes", "No"], 3600)
+        .createPoll(pollName, ["Yes", "No"], 3600)
         .send({ from: account })
-
 
       const pollCreatedEvent = receipt.events?.PollCreated
       if (pollCreatedEvent) {
@@ -85,12 +84,22 @@ function App() {
                 </p>
 
                 <div className="grid grid-cols-1 gap-4">
+                  <div className="space-y-2">
+                    <input
+                      type="text"
+                      value={pollName}
+                      onChange={(e) => setPollName(e.target.value)}
+                      placeholder="Enter poll name"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+
                   <button
                     onClick={createSamplePoll}
                     className="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
                     disabled={loading}
                   >
-                    Create Sample Poll
+                    Create Poll
                   </button>
 
                   <button
