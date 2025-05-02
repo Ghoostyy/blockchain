@@ -9,7 +9,7 @@ Une application décentralisée (DApp) de vote construite avec React, Web3.js et
 
 ## 🌐 Application Déployée
 
-[Lien vers l'application](https://your-dapp-url.netlify.app) 
+[Lien vers l'application](https://blockchain-eight-gamma.vercel.app/) 
 
 ## 🚀 Installation Locale
 
